@@ -1,0 +1,11 @@
+{
+  "id": "weekly-summary",
+  "name": "Weekly summary generator",
+  "version": "1.0.0",
+  "minAppVersion": "1.7.2",
+  "description": "Fetch bookmarked pages from Notion and save it to Markdown",
+  "author": "shiomiyan",
+  "authorUrl": "https://github.com/shiomiyan",
+  "fundingUrl": "https://github.com/sponsors/shiomiyan",
+  "isDesktopOnly": false
+}
