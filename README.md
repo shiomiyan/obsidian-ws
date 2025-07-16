@@ -88,34 +88,3 @@ deno task build
 # テストを実行
 deno task test
 ```
-
-### Temporal API使用について
-
-このプラグインはDenoのunstable機能であるTemporal APIを使用して日付処理を行っています。
-Temporal APIは現在のDateオブジェクトに代わる新しい日付・時刻APIで、より正確で直感的な日付操作が可能です。
-
-- ISO週番号の計算でTemporal APIを使用
-- `--unstable-temporal`フラグが必要
-- より正確で安全な日付操作を実現
-
-### プロジェクト構造
-
-```
-src/
-├── main.ts                    # メインプラグインファイル
-├── notion-adapter.ts          # Notionコンテンツ取得アダプタ
-├── notion-service.ts          # ビジネスロジック
-├── types.ts                   # 型定義
-├── notion-service.test.ts     # テストファイル
-└── styles.css                 # プラグインスタイル
-```
-
-## 技術仕様
-
-- **アーキテクチャ**: アダプタパターンによる外部依存の抽象化
-- **テスト**: `@std/expect` と `@std/testing/bdd` を使用
-- **フェッチ戦略**: 複数のフォールバック戦略でObsidian環境に対応
-
-## ライセンス
-
-MIT
