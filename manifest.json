@@ -1,9 +1,9 @@
 {
   "id": "weekly-summary",
-  "name": "Weekly summary generator",
+  "name": "ブクマまとめ奴",
   "version": "1.0.0",
   "minAppVersion": "1.7.2",
-  "description": "Fetch bookmarked pages from Notion and save it to Markdown",
+  "description": "オレオレ・ブクマまとめプラグイン via Notion",
   "author": "shiomiyan",
   "authorUrl": "https://github.com/shiomiyan",
   "fundingUrl": "https://github.com/sponsors/shiomiyan",

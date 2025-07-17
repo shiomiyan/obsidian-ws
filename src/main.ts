@@ -17,8 +17,8 @@ export default class WebContentPlugin extends Plugin {
 		this.notionContentAdapter.setObsidianContext(this.app);
 
 		const notionRibbonIconEl = this.addRibbonIcon(
-			"database",
-			"Fetch Notion Content",
+			"wand-sparkles",
+			"Generate weekly summary from Notion",
 			(_: MouseEvent) => {
 				this.fetchNotionContent();
 			},

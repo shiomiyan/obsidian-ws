@@ -75,8 +75,7 @@ export async function generateMarkdownContent(
 			const title = entry.properties.Title.title[0]?.plain_text || "Untitled";
 			const url = entry.properties.URL.url;
 
-			markdownOutput += `### ${title}\n\n`;
-			markdownOutput += `[${title}](${url})\n\n`;
+			markdownOutput += `### [${title}](${url})\n\n`;
 
 			const pageContent = await adapter.pageToMarkdown(entry.id, apiKey);
 			if (pageContent.trim()) {
