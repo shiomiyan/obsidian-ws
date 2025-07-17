@@ -57,7 +57,7 @@ export default class WebContentPlugin extends Plugin {
 	}
 
 	async executeNotionFetch(weekNumber: string): Promise<void> {
-		new Notice(`⏳ Fetching content for Notion Week ${weekNumber}...`);
+		new Notice(`⏳ Fetching content from Notion Week ${weekNumber}...`);
 
 		try {
 			const params = {
