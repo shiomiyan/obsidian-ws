@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   release:
@@ -48,18 +48,18 @@ jobs:
           files: weekly-summary-${{ steps.extract_version.outputs.VERSION }}.zip
           body: |
             # Weekly Summary Generator v${{ steps.extract_version.outputs.VERSION }}
-            
+
             Obsidianプラグイン「Weekly Summary Generator」のリリースです。
-            
+
             ## インストール方法
             1. 添付のzipファイルをダウンロード
             2. Obsidianの設定 > Community plugins > フォルダアイコンをクリック
             3. zipファイルを解凍してプラグインフォルダに配置
             4. プラグインを有効化
-            
+
             ## 変更内容
             このリリースの変更内容については、[コミット履歴](https://github.com/${{ github.repository }}/compare/v${{ steps.extract_version.outputs.VERSION }}...HEAD)をご確認ください。
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
