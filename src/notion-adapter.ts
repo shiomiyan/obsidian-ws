@@ -134,11 +134,11 @@ export class InMemoryNotionContentAdapter implements NotionContentAdapter {
     this.mockPageContent = mockPageContent;
   }
 
-  fetchDatabase(params: NotionFetchParams): Promise<NotionDatabaseResult> {
+  fetchDatabase(_params: NotionFetchParams): Promise<NotionDatabaseResult> {
     return Promise.resolve(this.mockDatabaseResult);
   }
 
-  pageToMarkdown(pageId: string, apiKey: string): Promise<string> {
+  pageToMarkdown(pageId: string, _apiKey: string): Promise<string> {
     const content = this.mockPageContent.get(pageId);
     return Promise.resolve(content || `Mock content for page ${pageId}`);
   }
