@@ -112,16 +112,18 @@ class WeekNumberInputModal extends Modal {
 		const { contentEl } = this;
 		contentEl.empty();
 
-		contentEl.createEl("h2", { text: "Please enter the week number" });
+		contentEl.createEl("h2", { text: "Please select a date" });
 
 		const inputContainer = contentEl.createDiv({ cls: "week-input-container" });
 
 		const input = inputContainer.createEl("input", {
-			type: "text",
-			placeholder: "Example: 2025-W21",
-			value: "",
+			type: "date",
+			value: this.getTodayInputValue(),
 			cls: "week-number-input",
 		});
+
+		const weekInfo = contentEl.createDiv({ cls: "week-number-display" });
+		this.updateWeekInfo(input.value, weekInfo);
 
 		const buttonContainer = contentEl.createDiv({ cls: "button-container" });
 
@@ -134,8 +136,13 @@ class WeekNumberInputModal extends Modal {
 			text: "Cancel",
 		});
 
+		input.addEventListener("change", () => {
+			this.updateWeekInfo(input.value, weekInfo);
+		});
+
 		input.addEventListener("keydown", (event) => {
 			if (event.key === "Enter") {
+				event.preventDefault();
 				this.submit(input.value);
 			}
 		});
@@ -157,19 +164,73 @@ class WeekNumberInputModal extends Modal {
 		contentEl.empty();
 	}
 
-	private submit(weekNumber: string) {
-		if (!weekNumber.trim()) {
-			new Notice("Please enter a week number");
+	private submit(selectedDate: string) {
+		if (!selectedDate) {
+			new Notice("Please select a date");
 			return;
 		}
 
-		const isoWeekFormat = /^\d{4}-W([0-4]?\d|5[0-3])$/;
-		if (!isoWeekFormat.test(weekNumber.trim())) {
-			new Notice("Invalid week number format (e.g., 2025-W21)");
+		const weekNumber = this.formatISOWeek(selectedDate);
+		if (!weekNumber) {
+			new Notice("Invalid date. Please select a valid date.");
 			return;
 		}
 
 		this.close();
-		this.onSubmit(weekNumber.trim());
+		this.onSubmit(weekNumber);
+	}
+
+	private updateWeekInfo(dateInput: string, containerEl: HTMLElement) {
+		const weekNumber = this.formatISOWeek(dateInput);
+		if (weekNumber) {
+			containerEl.setText(`Calculated ISO week: ${weekNumber}`);
+		} else {
+			containerEl.setText("");
+		}
+	}
+
+	private getTodayInputValue(): string {
+		const today = new Date();
+		const year = today.getFullYear();
+		const month = String(today.getMonth() + 1).padStart(2, "0");
+		const day = String(today.getDate()).padStart(2, "0");
+		return `${year}-${month}-${day}`;
+	}
+
+	private formatISOWeek(dateString: string): string | null {
+		if (!dateString) {
+			return null;
+		}
+
+		const [year, month, day] = dateString.split("-").map(Number);
+		if (
+			[year, month, day].some(
+				(value) => Number.isNaN(value) || value === undefined,
+			)
+		) {
+			return null;
+		}
+
+		const date = new Date(Date.UTC(year, month - 1, day));
+
+		if (Number.isNaN(date.getTime())) {
+			return null;
+		}
+
+		const { isoYear, isoWeek } = this.calculateISOWeek(date);
+		return `${isoYear}-W${String(isoWeek).padStart(2, "0")}`;
+	}
+
+	private calculateISOWeek(date: Date): { isoYear: number; isoWeek: number } {
+		const tmp = new Date(date);
+		tmp.setUTCDate(tmp.getUTCDate() + 4 - (tmp.getUTCDay() || 7));
+		const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
+		const isoWeek = Math.ceil(
+			((tmp.getTime() - yearStart.getTime()) / 86400000 + 1) / 7,
+		);
+		return {
+			isoYear: tmp.getUTCFullYear(),
+			isoWeek,
+		};
 	}
 }
