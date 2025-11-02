@@ -1,7 +1,7 @@
 {
   "id": "weekly-summary",
   "name": "ブクマまとめ奴",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "minAppVersion": "1.7.2",
   "description": "オレオレ・ブクマまとめプラグイン via Notion",
   "author": "shiomiyan",
